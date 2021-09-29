@@ -4,9 +4,27 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import { HashRouter as Router } from 'react-router-dom';
+
+import { API_AUTH_TOKEN } from './utils/consts';
+
+import axios from 'axios';
+
+axios.defaults.headers.common['Authorization'] = `Bearer ${API_AUTH_TOKEN}`;
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
+console.log(Object.keys(localStorage));
+
+const defaultState = {
+  pinnedStops: Object.keys(localStorage).filter(ls => ls.startsWith('pinned-stop')),
+  favoriteStop: Object.keys(localStorage).find(ls => ls.startsWith('fave-stop'))
+}
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Router>
+      <App />
+    </Router>
   </React.StrictMode>,
   document.getElementById('root')
 );

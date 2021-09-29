@@ -1,0 +1,28 @@
+.live-indicator {
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    background-color: red;
+    animation-name: pulse;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+.live-indicator-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    margin-bottom: 24px;
+}
+
+@keyframes pulse {
+    from {
+        opacity: 100%;
+    }
+
+    to {
+        opacity: 20%;
+    }
+}
