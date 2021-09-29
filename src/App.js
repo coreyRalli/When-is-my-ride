@@ -8,7 +8,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 
-import { NavLink, Route, Switch as RouterSwitch } from 'react-router-dom';
+import { NavLink, Route, Switch as RouterSwitch, useHistory } from 'react-router-dom';
 
 import useMediaQuery from '@mui/material/useMediaQuery';
 
@@ -35,6 +35,19 @@ function App() {
 
   const [state, dispatch] = useAsyncReducer(AppReducer.appReducer, AppReducer.defaultState);
 
+  const history = useHistory();
+
+  const onBottomNavChange = (event, newValue) => {
+    switch (newValue) {
+      case 0:
+        history.push('/');
+        break;
+      case 1:
+        history.push('/search');
+        break;
+    }
+  }
+
   return (
     <AppContext.Provider value={{ appState: state, appDispatcher: dispatch }}>
       <ThemeProvider theme={theme}>
@@ -49,9 +62,9 @@ function App() {
           </RouterSwitch>
 
           <Paper sx={{ gridArea: 'NavBar' }}>
-            <BottomNavigation showLabels>
-              <BottomNavigationAction to="/" component={NavLink} label="Home" icon={<HomeIcon />} />
-              <BottomNavigationAction to="/search" component={NavLink} label="Search" icon={<SearchIcon />} />
+            <BottomNavigation onChange={onBottomNavChange} showLabels>
+              <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+              <BottomNavigationAction label="Search" icon={<SearchIcon />} />
             </BottomNavigation>
           </Paper>
         </div>

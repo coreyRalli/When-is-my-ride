@@ -2,7 +2,8 @@ export const reducer = (prevState, action) => {
     switch (action.type) {
         case 'display-overview-data':
         const latestDeparture = action.detail.departures[0] || null;
-        const latestDepartureLine = (latestDeparture) ? action.detail.directions.find(dir => dir.id === latestDeparture.directionId) : null;    
+        const latestDepartureLine = (latestDeparture) ? action.detail.directions.find(dir => dir.id === latestDeparture.directionId) : null;
+        const latestRoute = (latestDeparture) ? action.detail.routes.find(route => route.id === latestDeparture.lineId) : null;
         
         return {
                 ...prevState,
@@ -13,6 +14,8 @@ export const reducer = (prevState, action) => {
                 stopLong: action.detail.stopLong,
                 stopLat: action.detail.stopLat,
                 name: action.detail.name,
+                latestRoute,
+                routes: action.detail.routes,
                 currentView: 'results',
                 hasInitLoaded: true,
                 transportType: action.detail.transportType
@@ -46,6 +49,7 @@ export const reducer = (prevState, action) => {
 export const defaultState = {
     latestDeparture: null,
     latestDepartureLine: null,
+    latestRoute: null,
     currentView: 'loading',
     currentTabView: 0,
     hasInitLoaded: false,
@@ -54,5 +58,6 @@ export const defaultState = {
     stopLong: 0,
     stopLat: 0,
     departures: [],
-    directions: []
+    directions: [],
+    routes: []
 }

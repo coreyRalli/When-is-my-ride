@@ -204,8 +204,6 @@ const AutoSuggestSearchBox = ({ initialText = '',
 
                         </div>
 
-                        {/* {(canUseLocation) && <button onClick={onUseLocatonBtnClicked} type="button" className="use-location-button">Use Location</button>} */}
-
                         <div className={`auto-complete-wrapper ${(!state.autoCompleteShowing) ? 'hidden' : ''}`}>
                             <ul id="suggestions-list" role="listbox" onMouseLeave={onSuggestionBoxMouseLeave} className="auto-complete">
                                 {
@@ -224,6 +222,8 @@ const AutoSuggestSearchBox = ({ initialText = '',
                         </div>
                     </div>
                 </div>
+
+                {(canUseLocation) && <button onClick={onUseLocatonBtnClicked} type="button" className="use-location-button">Use Location</button>}
 
                 {
                     (state.helperText.length > 0) && <p className={"search-box-helper-text"}>{state.helperText}</p>

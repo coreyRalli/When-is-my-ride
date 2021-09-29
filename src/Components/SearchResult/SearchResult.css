@@ -51,6 +51,11 @@ a.search-result-clickable:active {
     padding-right: 8px;
 }
 
+.search-result-info-container.departure {
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
 .search-result.alternate {
     background-color: rgba(102,102,102, 0.1);
 }

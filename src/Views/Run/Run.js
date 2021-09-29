@@ -17,6 +17,14 @@ import DeparturesList from '../../Components/DepartureList/DepartureList';
 import IconButton from '@mui/material/IconButton';
 import RefreshIcon from '@mui/icons-material/Refresh';
 
+import Button from '@mui/material/Button';
+
+import Container from '@mui/material/Container';
+
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+
+import { formatTime } from '../../utils/consts';
+
 const Run = () => {
     const { id } = useParams();
     const location = useLocation();
@@ -28,14 +36,49 @@ const Run = () => {
 
         const transportType = new URLSearchParams(location.search);
 
-        const value = transportType.get('transportType');
+        const transportTypeValue = transportType.get('transportType');
+        const directionIdValue = transportType.get('directionId');
+        const lineIdValue = transportType.get('lineId');
 
-        dispatch(RunActions.createFetchRunQueryAsync(id, +value));
+        console.log(transportTypeValue, directionIdValue, lineIdValue);
+
+        dispatch(RunActions.createFetchRunQueryAsync(id, +transportTypeValue, +directionIdValue, +lineIdValue));
     }
 
     useEffect(() => {
         fetchRunResults();
     }, [location]);
+
+    const mapBtnClick = () => {
+        dispatch({ type: 'set-map', detail: { showMap: !state.mapIsShowing } });
+    }
+
+    const getInitCenter = () => {
+        const transportType = new URLSearchParams(location.search);
+
+        const mapStartId = transportType.get('mapStartId');
+
+        if (mapStartId) {
+            const mapStartStop = state.stops.find(stop => stop.stopId === +mapStartId);
+
+            if (mapStartStop) {
+                return [mapStartStop.stopLat, mapStartStop.stopLong];
+            }
+        }
+
+        const firstStop = state.stops[0];
+
+        if (firstStop) {
+
+            return [firstStop.stopLat, firstStop.stopLong];
+        }
+
+        // If not found, default to flinders street.
+        return [
+            -37.818078,
+            144.96681
+        ]
+    }
 
     const renderInner = () => {
         switch (state.currentViewState) {
@@ -44,7 +87,49 @@ const Run = () => {
 
             case 'results':
                 return (
-                    <DeparturesList includeStopName={true} includeDestinationName={false} lines={[]} departures={state.stops} />
+                    <>
+                        <Container maxWidth="md">
+                            <Typography variant="h5" sx={{ marginLeft: "8px", marginTop: "12px" }}>
+                                {state.stops[0].name} to {state.stops[state.stops.length - 1].name}
+                            </Typography>
+
+                            <Button onClick={mapBtnClick} sx={{ marginTop: '12px' }}>
+                                {(state.mapIsShowing) ? "Hide Map" : "Show Map"}
+                            </Button>
+
+                            {(state.mapIsShowing) &&
+                                <div style={{ width: "100%", height: '300px' }}>
+                                    <MapContainer center={getInitCenter()} zoom={12} scrollWheelZoom={false}>
+                                        <TileLayer
+                                            attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+
+                                        {
+                                            state.stops.map((stop, index) => <Marker
+                                                position={
+                                                    [
+                                                        stop.stopLat,
+                                                        stop.stopLong
+                                                    ]
+                                                }>
+                                                <Popup>
+                                                    <Typography sx={{ textAlign: 'center' }}>
+                                                        {stop.name}
+                                                    </Typography>
+
+                                                    <Typography sx={{ textAlign: 'center' }}>
+                                                        {formatTime((stop.liveArrivalTimeUTC) ? stop.liveArrivalTimeUTC : stop.timetabledArrivalTimeUTC)}
+                                                    </Typography>
+                                                </Popup>
+                                            </Marker>)
+                                        }
+                                    </MapContainer>
+                                </div>}
+                        </Container>
+
+                        <DeparturesList includeServiceName={false} includeStopName={true} includeDestinationName={false} lines={[]} departures={state.stops} />
+                    </>
                 )
 
             case 'error':

@@ -17,6 +17,7 @@ import Typography from '@mui/material/Typography';
 
 import './Search.css';
 import SearchResultsList from '../../Components/SearchResultList/SearchResultsList';
+import { Container } from '@mui/material';
 
 const Search = () => {
     const location = useLocation();
@@ -63,9 +64,9 @@ const Search = () => {
                 return null;
             case 'begin':
                 return (
-                    <div className="message">
-                        <p>Results will show up here!</p>
-                    </div>);
+                    <Container maxWidth={"md"}>
+                        <Typography variant="body2">Search results will appear here!</Typography>
+                    </Container>);
             case 'results':
                 return (
                     <>

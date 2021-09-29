@@ -30,6 +30,7 @@ import { useLocation, useParams } from 'react-router-dom';
 import useTheme from '@mui/system/useTheme';
 
 import * as AppActions from '../../AppActions';
+import { MenuItem, Select, Container, InputLabel, FormControl } from '@mui/material';
 
 const Stop = () => {
     const [state, dispatch] = useAsyncReducer(StopReducer.reducer, StopReducer.defaultState);
@@ -88,7 +89,6 @@ const Stop = () => {
                         <Tabs onChange={onTabChange} value={state.currentTabView} centered>
                             <Tab value={0} label="Overview" />
                             <Tab value={1} label="Departures" />
-                            <Tab value={2} label="About" />
                         </Tabs>
 
                         <SwipeableViews axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -97,21 +97,35 @@ const Stop = () => {
                             <div>
                                 {
                                     (state.currentTabView === 0) &&
-                                    <Overview latestDeparture={state.latestDeparture} latestDepartureLine={state.latestDepartureLine} stationName={state.name} />
+                                    <Overview   latestRoute={state.latestRoute}
+                                                transportType={state.transportType} 
+                                                latestDeparture={state.latestDeparture} 
+                                                latestDepartureLine={state.latestDepartureLine} 
+                                                stationName={state.name}
+                                                stopLong={state.stopLong}
+                                                stopLat={state.stopLat} />
                                 }
                             </div>
 
                             <div>
                                 {
                                     (state.currentTabView === 1) &&
-                                    <DepartureList departures={state.departures} transportType={state.transportType} lines={state.directions} />
-                                }
-                            </div>
+                                    <>
+                                        <Container maxWidth="md" sx={{ marginTop: '12px', marginBottom: '6px' }}>
+                                            <FormControl fullWidth>
+                                                <InputLabel id="line-filter-label">Filter by Line</InputLabel>
+                                                <Select id="line-filter-select"
+                                                    labelId="line-filter-label"
+                                                    value={-1}
+                                                    label="Filter by Line">
+                                                    <MenuItem value={-1}>All</MenuItem>
 
-                            <div>
-                                {
-                                    (state.currentTabView === 2) &&
-                                    <About />
+                                                    {state.routes.map((route,index) => <MenuItem value={index}>{route.name}</MenuItem>)}
+                                                </Select>
+                                            </FormControl>
+                                        </Container>
+                                        <DepartureList includeServiceName={true} services={state.routes} departures={state.departures} transportType={state.transportType} lines={state.directions} />
+                                    </>
                                 }
                             </div>
                         </SwipeableViews>

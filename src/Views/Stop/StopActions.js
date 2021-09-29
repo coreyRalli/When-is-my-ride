@@ -12,12 +12,13 @@ export const createGetOverviewInfoActions = async (stopId, transportType) => {
   const {
     departures,
     id,
+    routes,
     stopLong,
     stopLat,
     name
   } = stop;
 
-  return { type: 'display-overview-data', detail: { departures, id, stopLong, stopLat, name, directions, transportType }}
+  return { type: 'display-overview-data', detail: { departures, id, stopLong, stopLat, name, directions, routes, transportType }}
 }
 
 export const createSetTabAction = (tabIndex) => {
@@ -36,6 +37,8 @@ export const createGetDeparturesQuery = (stopId, transportType) => ({
           id,
           transportType,
           routes {
+            name,
+            id,
             directions {
               id,
               name
@@ -48,6 +51,8 @@ export const createGetDeparturesQuery = (stopId, transportType) => ({
             liveArrivalTimeUTC
             directionId,
             runRef,
+            stopId,
+            lineId,
             transportType
           }
         }

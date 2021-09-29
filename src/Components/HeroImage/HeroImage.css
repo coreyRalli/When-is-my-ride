@@ -1,0 +1,83 @@
+.random-image {
+    object-fit: cover;
+}
+
+.header-image {
+    min-height: 120px;
+    background-color: gray;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+}
+
+.header-image-title-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,0.6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.header-image-title-container h1 {
+    margin: 0px;
+    font-size: 2.0em;
+    text-align: center;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.header-image-title-container h2 {
+    font-size: 1.3em;
+    text-align: center;
+    margin: 0;
+    padding-left: 4px;
+    padding-right: 4px;
+}
+
+.landing-footer {
+    padding-left: 8px;
+    padding-right: 8px;
+    padding-bottom: 12px;
+}
+
+.img-profile-link {
+    position: absolute;
+    right: 8px;
+    bottom: 0px;
+    color: white;
+}
+
+.img-profile-link:visited {
+    color: white;
+}
+
+.img-profile-link:hover {
+    color: #0099CC;
+}
+
+.img-profile-link:active {
+    color: black;
+}
+
+/* On larger screens, set the hero image to be heigher */
+@media (min-height: 569px) {
+    .header-image {
+        min-height: 120px;
+    }
+
+    .header-image-title-container h1 {
+        font-size: 2.5em;
+    }
+}
+
+@media(min-width: 280px) {
+    .header-image-title-container h1 {
+        font-size: 2em;
+    }
+}

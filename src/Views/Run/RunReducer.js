@@ -11,6 +11,11 @@ export const reducer = (prevState, action) => {
                 currentViewState: 'results',
                 stops: action.detail.stops
             }
+        case 'set-map':
+            return {
+                ...prevState,
+                mapIsShowing: action.detail.showMap
+            }
         default:
             return prevState;
     }
@@ -20,5 +25,6 @@ export const defaultState = {
     currentViewState: 'loading',
     startingStop: '',
     endingStop: '',
-    stops: []
+    stops: [],
+    mapIsShowing: true
 }

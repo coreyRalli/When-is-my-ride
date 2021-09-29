@@ -8,6 +8,8 @@ import AppContext from '../../AppContext';
 
 import SearchResultsList from '../../Components/SearchResultList/SearchResultsList';
 
+import HeroImage from '../../Components/HeroImage/HeroImage';
+
 const Home = () => {
     const context = useContext(AppContext);
 
@@ -23,6 +25,7 @@ const Home = () => {
                         Home
                     </Typography>
                 </Toolbar>
+                <HeroImage />
             </AppBar>
 
             <SearchResultsList resultsCountText={"Pinned stops"} noResultsMessage={"Pin your favorite stops for easy access!"} showRemoveIcon={true} stops={getStops()}/>
