@@ -90,7 +90,7 @@ const Run = () => {
                     <>
                         <Container maxWidth="md">
                             <Typography variant="h5" sx={{ marginLeft: "8px", marginTop: "12px" }}>
-                                {state.stops[0].name} to {state.stops[state.stops.length - 1].name}
+                                <b>{state.stops[0].name}</b> to <b>{state.stops[state.stops.length - 1].name}</b>
                             </Typography>
 
                             <Button onClick={mapBtnClick} sx={{ marginTop: '12px' }}>
@@ -106,7 +106,7 @@ const Run = () => {
                                         />
 
                                         {
-                                            state.stops.map((stop, index) => <Marker
+                                            state.stops.map((stop, index) => <Marker key={stop.id}
                                                 position={
                                                     [
                                                         stop.stopLat,

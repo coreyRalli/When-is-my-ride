@@ -6,6 +6,8 @@ import searchIcon from '../../assets/search_icon.svg';
 
 import suburbsAndTowns from '../../assets/townsAndSuburbs.json';
 
+import { Button } from '@mui/material';
+
 const AutoSuggestSearchBox = ({ initialText = '',
     compact = false,
     canUseLocation = true,
@@ -144,7 +146,7 @@ const AutoSuggestSearchBox = ({ initialText = '',
                 const filterStr = generateFilterText(state.filters);
 
                 if (typeof onLocationUsed === 'function')
-                    onLocationUsed({ filterStr, latitude: pos.coords.latitude, longitude: pos.coords.longitude });
+                    onLocationUsed({ filterStr, latitude: pos.coords.latitude, longitude: pos.coords.longitude, filters: filterStr });
             });
         }
     }
@@ -223,7 +225,7 @@ const AutoSuggestSearchBox = ({ initialText = '',
                     </div>
                 </div>
 
-                {(canUseLocation) && <button onClick={onUseLocatonBtnClicked} type="button" className="use-location-button">Use Location</button>}
+                {(canUseLocation) && <Button variant="contained" sx={{ marginBottom: '12px' }} onClick={onUseLocatonBtnClicked} type="button" className="use-location-button">Use Location</Button>}
 
                 {
                     (state.helperText.length > 0) && <p className={"search-box-helper-text"}>{state.helperText}</p>
