@@ -26,7 +26,7 @@ import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { formatTime } from '../../utils/consts';
 
 const Run = () => {
-    const { id } = useParams();
+    const { id , lineId, directionId, transportType } = useParams();
     const location = useLocation();
 
     const [state, dispatch] = useAsyncReducer(RunReducer.reducer, RunReducer.defaultState);
@@ -34,15 +34,12 @@ const Run = () => {
     const fetchRunResults = () => {
         dispatch({ type: 'set-loading', detail: {} });
 
-        const transportType = new URLSearchParams(location.search);
+        console.log("Id: ", id);
+        console.log("TransportType: ", transportType);
+        console.log("Direction ID: ", directionId);
+        console.log("Line ID: ", lineId);
 
-        const transportTypeValue = transportType.get('transportType');
-        const directionIdValue = transportType.get('directionId');
-        const lineIdValue = transportType.get('lineId');
-
-        console.log(transportTypeValue, directionIdValue, lineIdValue);
-
-        dispatch(RunActions.createFetchRunQueryAsync(id, +transportTypeValue, +directionIdValue, +lineIdValue));
+        dispatch(RunActions.createFetchRunQueryAsync(id, +transportType, +directionId, +lineId));
     }
 
     useEffect(() => {
@@ -54,9 +51,9 @@ const Run = () => {
     }
 
     const getInitCenter = () => {
-        const transportType = new URLSearchParams(location.search);
+        const query = new URLSearchParams(location.search);
 
-        const mapStartId = transportType.get('mapStartId');
+        const mapStartId = query.get('mapStartId');
 
         if (mapStartId) {
             const mapStartStop = state.stops.find(stop => stop.stopId === +mapStartId);

@@ -28,7 +28,7 @@ const SearchResult = ({ stop, index, showMinusFavInstead = false }) => {
 
     return (
         <li className={`search-result ${(index % 2 !== 0) ? 'alternate' : ''}`}>
-            <Link component={RouterLink} className="search-result-clickable" to={`/stop/${stop.id}?transportType=${stop.transportType}`}>
+            <Link component={RouterLink} className="search-result-clickable" to={`/stop/${stop.id}/${stop.transportType}`}>
                 <div className="search-result-icon-container">
                     <img width={48} height={48} src={TRANSPORT_ICONS[stop.transportType]} alt={TRANSPORT_TYPES[stop.transportType]} />
                 </div>

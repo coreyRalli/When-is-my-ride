@@ -16,6 +16,7 @@ import Home from './Views/Home/Home';
 import Search from './Views/Search/Search';
 import Stop from './Views/Stop/Stop';
 import Run from './Views/Run/Run';
+import NoRoute from './Views/NoRoute/NoRoute';
 
 import './App.css';
 import { useMemo } from "react";
@@ -56,9 +57,10 @@ function App() {
         <div className="application" elevation={3}>
           <RouterSwitch>
             <Route path="/search" component={Search} />
-            <Route path="/stop/:id" component={Stop} />
-            <Route path="/run/:id" component={Run} />
-            <Route path="/" component={Home} />
+            <Route path="/stop/:id/:transportType" component={Stop} />
+            <Route path="/run/:id/:transportType/:lineId/:directionId" component={Run} />
+            <Route exact path="/" component={Home} />
+            <Route path="*" component={NoRoute}/>
           </RouterSwitch>
 
           <Paper sx={{ gridArea: 'NavBar' }}>

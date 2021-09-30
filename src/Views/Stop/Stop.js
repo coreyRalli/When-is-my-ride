@@ -34,7 +34,7 @@ import { MenuItem, Select, Container, InputLabel, FormControl } from '@mui/mater
 
 const Stop = () => {
     const [state, dispatch] = useAsyncReducer(StopReducer.reducer, StopReducer.defaultState);
-    const { id } = useParams();
+    const { id, transportType } = useParams();
     const location = useLocation();
 
     const context = useContext(AppContext);
@@ -44,11 +44,9 @@ const Stop = () => {
     useEffect(() => {
         dispatch({ type: 'display-loading', detail: {} });
 
-        const params = new URLSearchParams(location.search);
         const stopId = +id;
-        const transportType = +params.get('transportType');
 
-        dispatch(StopActions.createGetOverviewInfoActions(stopId, transportType));
+        dispatch(StopActions.createGetOverviewInfoActions(stopId, +transportType));
     }, [id]);
 
     useEffect(() => {
@@ -61,11 +59,9 @@ const Stop = () => {
         // If it has loaded, create a timer that fetches the data every 5 seconds or so.
         // TODO: If I time, use WebSockets instead of polling.
         const fetchTimer = setInterval(() => {
-            const params = new URLSearchParams(location.search);
             const stopId = +id;
-            const transportType = +params.get('transportType');
 
-            dispatch(StopActions.createGetOverviewInfoActions(stopId, transportType));
+            dispatch(StopActions.createGetOverviewInfoActions(stopId, +transportType));
         }, 5000);
 
         return () => clearInterval(fetchTimer);
@@ -139,11 +135,9 @@ const Stop = () => {
     }
 
     const onRefreshBtnClick = () => {
-        const transportType = +new URLSearchParams(location.search).get('transportType');
-
         dispatch({ type: 'display-loading', detail: {} })
 
-        dispatch(StopActions.createGetOverviewInfoActions(+id, transportType))
+        dispatch(StopActions.createGetOverviewInfoActions(+id, +transportType))
     }
 
     return (

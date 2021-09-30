@@ -12,7 +12,7 @@ const DepartureListItem = ({ departure, line, service, index, transportType, inc
         <li className={`search-result ${(index % 2 !== 0) ? 'alternate' : ''}`}>
             <Link component={RouterLink} 
                 className="search-result-clickable" 
-                to={(line) ? `/run/${departure.runRef}?transportType=${transportType}&lineId=${service.id}&directionId=${departure.directionId}&mapStartId=${departure.stopId}` : `/stop/${departure.stopId}?transportType=${departure.transportType}`}>
+                to={(line) ? `/run/${departure.runRef}/${transportType}/${service.id}/${departure.directionId}?mapStartId=${departure.stopId}` : `/stop/${departure.stopId}/${departure.transportType}`}>
                 <div className="search-result-info-container departure">
                     <div style={{ padding: 12, display: 'flex', alignContent: 'center', justifyContent: 'center' }}>
                         <Typography component="div" variant="h5">
