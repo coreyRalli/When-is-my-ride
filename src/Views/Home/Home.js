@@ -10,6 +10,8 @@ import SearchResultsList from '../../Components/SearchResultList/SearchResultsLi
 
 import HeroImage from '../../Components/HeroImage/HeroImage';
 
+import Container from '@mui/material/Container';
+
 const Home = () => {
     const context = useContext(AppContext);
 
@@ -17,7 +19,7 @@ const Home = () => {
         return context.appState.pinnedStops.map(stop => JSON.parse(localStorage.getItem(stop)));
     }
 
-    return(
+    return (
         <div className="view home">
             <AppBar position="sticky">
                 <Toolbar>
@@ -28,7 +30,13 @@ const Home = () => {
                 <HeroImage />
             </AppBar>
 
-            <SearchResultsList resultsCountText={"Pinned stops"} noResultsMessage={"Pin your favorite stops for easy access!"} showRemoveIcon={true} stops={getStops()}/>
+            <SearchResultsList resultsCountText={"Pinned stops"} noResultsMessage={"Pin your favorite stops for easy access!"} showRemoveIcon={true} stops={getStops()} />
+
+            <Container sx={{ marginTop: '32px', textAlign: 'center' }} maxWidth="md">
+                <Typography variant="caption">
+                    PTV Timetable API Data Licensed from Public Transport Victoria under a Creative Commons Attribution 4.0 International Licence
+                </Typography>
+            </Container>
         </div>
     )
 }

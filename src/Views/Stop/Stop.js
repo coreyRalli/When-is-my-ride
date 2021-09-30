@@ -6,7 +6,6 @@ import * as StopActions from './StopActions';
 import * as StopReducer from './StopReducer';
 
 import Overview from './Overview/Overview';
-import About from './About/About';
 import DepartureList from '../../Components/DepartureList/DepartureList';
 
 import Loading from '../../Components/Loading/Loading';
@@ -35,7 +34,6 @@ import { MenuItem, Select, Container, InputLabel, FormControl } from '@mui/mater
 const Stop = () => {
     const [state, dispatch] = useAsyncReducer(StopReducer.reducer, StopReducer.defaultState);
     const { id, transportType } = useParams();
-    const location = useLocation();
 
     const context = useContext(AppContext);
 
@@ -107,19 +105,6 @@ const Stop = () => {
                                 {
                                     (state.currentTabView === 1) &&
                                     <>
-                                        <Container maxWidth="md" sx={{ marginTop: '12px', marginBottom: '6px' }}>
-                                            <FormControl fullWidth>
-                                                <InputLabel id="line-filter-label">Filter by Line</InputLabel>
-                                                <Select id="line-filter-select"
-                                                    labelId="line-filter-label"
-                                                    value={-1}
-                                                    label="Filter by Line">
-                                                    <MenuItem value={-1}>All</MenuItem>
-
-                                                    {state.routes.map((route,index) => <MenuItem value={index}>{route.name}</MenuItem>)}
-                                                </Select>
-                                            </FormControl>
-                                        </Container>
                                         <DepartureList includeServiceName={true} services={state.routes} departures={state.departures} transportType={state.transportType} lines={state.directions} />
                                     </>
                                 }
